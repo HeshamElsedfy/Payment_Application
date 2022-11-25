@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1669225370 source:f:\embedded systems\egfwd c project\payment application\server\server.c
+1669318967 source:f:\embedded systems\egfwd c project\payment application\server\server.c
 	"server.h"
 
 1668643447 f:\embedded systems\egfwd c project\payment application\server\server.h
@@ -18,12 +18,15 @@
 	"../Card/card.h"
 	<stdio.h>
 
-1668626993 source:f:\embedded systems\egfwd c project\payment application\application\app.c
+1669408982 source:f:\embedded systems\egfwd c project\payment application\application\app.c
 	"app.h"
 
-1668614631 f:\embedded systems\egfwd c project\payment application\application\app.h
-	"../std_types.h"
+1669257711 f:\embedded systems\egfwd c project\payment application\application\app.h
 	<stdio.h>
+	"../std_types.h"
+	"../Card/card.h"
+	"../Server/server.h"
+	"../Terminal/terminal.h"
 
 1668614631 f:\embedded systems\egfwd c project\payment application\card\card.h
 	"../std_types.h"
@@ -33,7 +36,7 @@
 1668648366 source:f:\embedded systems\egfwd c project\payment application\card\card.c
 	"card.h"
 
-1669225562 source:f:\embedded systems\egfwd c project\payment application\testbench.c
+1669408357 source:f:\embedded systems\egfwd c project\payment application\testbench.c
 	"Card/card.h"
 	"Terminal/terminal.h"
 	"Server/server.h"

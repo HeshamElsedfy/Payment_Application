@@ -21,6 +21,7 @@ EN_transState_t recieveTransactionData(ST_transaction_t *transData){
     ST_cardData_t cardData;
     ST_terminalData_t terminalData;
     boolean accountFound=0;
+    EN_transState_t ret=APPROVED;
     float maxAmmount=0;
     if(transactionCount>=TRANS_DB_SIZE){
         return INTERNAL_SERVER_ERROR;
@@ -56,10 +57,14 @@ EN_transState_t recieveTransactionData(ST_transaction_t *transData){
     termErr=getTransactionAmount(&terminalData);
     printf("\nMaximum Amount:");
     scanf("%f",&maxAmmount);
+    getchar();
     termErr=setMaxAmount(&terminalData,maxAmmount);
     termErr=isBelowMaxAmount(&terminalData);
     /*checking if terminal data is Valid*/
-    if(TERMINAL_OK!=termErr){
+    if(termErr==EXCEED_MAX_AMOUNT){
+        transData->transState=DECLINED_INSUFFECIENT_FUND;
+    }
+    else if (TERMINAL_OK != termErr){
         transData->transState=DECLINED_INSUFFECIENT_FUND;
         return DECLINED_INSUFFECIENT_FUND;
     }
@@ -93,9 +98,6 @@ EN_transState_t recieveTransactionData(ST_transaction_t *transData){
     else{
         /*do nothing*/
     }
-    printf("%d\n",i);
-    printf("%f\n",terminalData.transAmount);
-    printf("%f\n",accountsDB[i].balance);
     if(terminalData.transAmount > accountsDB[i].balance ){
         transData->transState=DECLINED_INSUFFECIENT_FUND;
         return DECLINED_INSUFFECIENT_FUND;
@@ -139,8 +141,10 @@ EN_serverError_t isAmountAvailable(ST_terminalData_t *termData, ST_accountsDB_t 
     }
 }
 EN_serverError_t saveTransaction(ST_transaction_t *transData){
+    transData->transactionSequenceNumber=transactionCount+1;
     tranactionsDB[transactionCount]=*transData;
     transactionCount++;
+
     return SERVER_OK;
 }
 void listSavedTransactions(void){
